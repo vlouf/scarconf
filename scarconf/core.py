@@ -14,8 +14,12 @@ import pandas as pd
 
 class S3car():
     def __init__(self, root_dir="/srv/data/s3car-server", etc_dir="/etc/opt/s3car-server/", html_dir="/srv/web/s3car-server/www") -> None:
+        self.root_path = root_dir
         self.cluttercal_path = os.path.join(root_dir, "cluttercal")
         self.config_path = os.path.join(root_dir, "config")
+        self.clean_ts_path = os.path.join(root_dir, "s3car_diagnostics", "clean")
+        self.diagnostics_path = os.path.join(root_dir, "s3car_diagnostics", "diagnostics")
+        self.raw_ts_path = os.path.join(root_dir, "s3car_diagnostics", "raw")
         self.dualpolqc_path = os.path.join(root_dir, "dualpol_qc")
         self.gpmmatch_path = os.path.join(root_dir, "gpmmatch")
         self.html_path = html_dir
