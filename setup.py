@@ -21,7 +21,7 @@ setup(
     description="S3car global parameters.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/vlouf/swirlconf",
+    url="https://github.com/vlouf/scarconf",
     author="Valentin Louf",
     # For a list of valid classifiers, see https://pypi.org/classifiers/
     classifiers=[  # Optional
