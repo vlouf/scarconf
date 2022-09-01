@@ -25,6 +25,7 @@ class S3car():
         self.html_path = html_dir
         self.log_path = os.path.join(root_dir, "log")
         self.solar_path = os.path.join(root_dir, "solar", "data")
+        self.sst_path = os.path.join(root_dir, "sensitivity")
         self.vols_path = os.path.join(root_dir, "vols")
         self.zdr_path = os.path.join(root_dir, "zdr_monitoring")
 
