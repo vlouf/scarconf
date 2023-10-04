@@ -8,6 +8,7 @@ __date__ = "2021/06"
 
 import configparser
 import logging
+import math
 import os
 import time
 
@@ -45,6 +46,10 @@ class S3car():
         self.gpm_userid = ""
         self.gpm_requestid = "001"
         self.rainptl_enabled = True
+        self.region = {
+            'lat': (-46.0, -7.5),
+            'lon': (112.0, 155.0),
+        }
         # TODO: consider having per-radar.tier instead of exhaustive list here
         self.tier1_radars = [2, 3, 4, 8, 19, 22, 23, 24, 28, 40, 52, 63, 64, 66, 68, 70, 71, 73, 76]
         self.tier2_radars = [1, 5, 6, 7, 14, 15, 16, 17, 29, 31, 32, 38, 42, 46, 49, 50, 55, 58, 67,
@@ -54,7 +59,7 @@ class S3car():
         self.nosun_radars = [6, 31, 32, 48, 95]
 
         self.read_local_config(etc_dir)
-
+        self.calc_region()
 
         self.check_paths_exist()
         if read_radars:
@@ -136,6 +141,19 @@ class S3car():
             datefmt="%Y-%m-%d %H:%M:%S",
         )
 
+    def calc_region(self):
+        # for converting lat,lon pairs use pyproj.Transformer.from_crs("EPSG:4326", "EPSG:3857")
+        eq_radius = 6378137
+        def delta(t): return t[1] - t[0]
+        def lon2mx(lon): return eq_radius * math.radians(lon)
+        def lat2my(lat): return eq_radius * math.log(math.tan(math.pi / 4 + math.radians(lat) / 2))
+
+        # derived region vals used in dashboard / make_bokeh_map()
+        self.region['mercator_x'] = tuple(lon2mx(lon) for lon in self.region['lon'])
+        self.region['mercator_y'] = tuple(lat2my(lat) for lat in self.region['lat'])
+        aspect_xy = delta(self.region['mercator_x']) / delta(self.region['mercator_y'])
+        self.region['aspect_ratio'] = aspect_xy
+
     def read_local_config(self, etc_dir):
         """Read local configuration settings (if any)."""
 
@@ -163,19 +181,24 @@ class S3car():
             self.rainptl_enabled = cfg['rainptl'].getboolean('enable')
         # [radar]
         if have_config(cfg, 'radar', 'tier1'):
-            self.tier1_radars = config_int_list(cfg, 'radar', 'tier1')
+            self.tier1_radars = config_list(cfg, int, 'radar', 'tier1')
         if have_config(cfg, 'radar', 'tier2'):
-            self.tier2_radars = config_int_list(cfg, 'radar', 'tier2')
+            self.tier2_radars = config_list(cfg, int, 'radar', 'tier2')
         if have_config(cfg, 'radar', 'tier3'):
-            self.tier3_radars = config_int_list(cfg, 'radar', 'tier3')
+            self.tier3_radars = config_list(cfg, int, 'radar', 'tier3')
         if have_config(cfg, 'radar', 'censor'):
-            self.censor_radars = config_int_list(cfg, 'radar', 'censor')
+            self.censor_radars = config_list(cfg, int, 'radar', 'censor')
         if have_config(cfg, 'radar', 'nosun'):
-            self.nosun_radars = config_int_list(cfg, 'radar', 'nosun')
+            self.nosun_radars = config_list(cfg, int, 'radar', 'nosun')
+        # [region]
+        if have_config(cfg, 'region', 'lat'):
+            self.region['lat'] = tuple(config_list(cfg, float, 'region', 'lat'))
+        if have_config(cfg, 'region', 'lon'):
+            self.region['lon'] = tuple(config_list(cfg, float, 'region', 'lon'))
 
         # individual radar info [radar.ID]
         if have_config(cfg, 'radar', 'ids'):
-            radar_ids = config_int_list(cfg, 'radar', 'ids')
+            radar_ids = config_list(cfg, int, 'radar', 'ids')
             for rid in radar_ids:
                 if not self.get_radar_tier(rid):
                     print(f"No tier for radar {rid} configured")
@@ -287,11 +310,11 @@ def have_config(cfg, group, item):
     """Return True if cfg[group][item] exists."""
     return cfg and group in cfg and item in cfg[group]
 
-def config_int_list(cfg, group, item):
-    """Return cfg[group][item] as list of ints."""
+def config_list(cfg, ty, group, item):
+    """Return cfg[group][item] as list of type `ty`."""
     if not cfg[group][item]:
         return []
-    return [int(r) for r in cfg[group][item].split(' ')]
+    return [ty(r) for r in cfg[group][item].split(' ')]
 
 class Chronos:
     """
