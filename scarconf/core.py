@@ -291,6 +291,20 @@ class S3car():
         110: "Tennant Creek",
     }
 
+    def configure_logging(self, level=logging.INFO):
+        """Configure logging setup."""
+        # TODO: vary according to config
+
+        # add time to log_fmt if running in apptainer/singularity
+        log_fmt="%(levelname)s %(message)s"
+        if os.environ.keys() & {'APPTAINER_CONTAINER', 'SINGULARITY_CONTAINER'}:
+            log_fmt="%(asctime)s " + log_fmt
+        logging.basicConfig(
+            level=level,
+            format=log_fmt,
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+
 def have_config(cfg, group, item):
     """Return True if cfg[group][item] exists."""
     return cfg and group in cfg and item in cfg[group]
