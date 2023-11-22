@@ -78,6 +78,20 @@ class S3car():
         if len(self.radar_site_info) == 0:
             raise ValueError(f"Invalid radar configuration file: {radar_fname}. Exiting code.")
 
+    def configure_logging(self, level=logging.INFO):
+        """Configure logging setup."""
+        # TODO: vary according to config
+
+        # add time to log_fmt if running in apptainer/singularity
+        log_fmt="%(levelname)s %(message)s"
+        if os.environ.keys() & {'APPTAINER_CONTAINER', 'SINGULARITY_CONTAINER'}:
+            log_fmt="%(asctime)s " + log_fmt
+        logging.basicConfig(
+            level=level,
+            format=log_fmt,
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+
 
 class Chronos:
     """
