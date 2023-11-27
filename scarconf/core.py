@@ -6,6 +6,7 @@ __contact__ = "valentin.louf@bom.gov.au"
 __version__ = "0.5.0"
 __date__ = "2021/06"
 
+import logging
 import os
 import time
 
