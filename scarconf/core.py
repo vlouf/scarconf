@@ -7,6 +7,7 @@ __version__ = "0.5.0"
 __date__ = "2021/06"
 
 import configparser
+import logging
 import math
 import os
 import time
