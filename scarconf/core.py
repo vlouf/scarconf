@@ -22,6 +22,17 @@ class S3car():
                  html_dir="/srv/web/s3car-server/www",
                  read_radars=True,
                  ) -> None:
+
+        try:
+            # env override of root directory
+            s3car_root = os.environ["S3CAR_ROOT_DIR"]
+            # prefix all directories
+            root_dir = s3car_root + root_dir
+            etc_dir = s3car_root + etc_dir
+            html_dir = s3car_root + html_dir
+        except KeyError:
+            pass
+
         self.root_path = root_dir
         self.cluttercal_path = os.path.join(root_dir, "cluttercal")
         self.config_path = os.path.join(root_dir, "config")
