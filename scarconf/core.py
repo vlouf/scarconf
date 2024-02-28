@@ -55,7 +55,7 @@ class S3car():
         self.tier2_radars = [1, 5, 6, 7, 14, 15, 16, 17, 29, 31, 32, 38, 42, 46, 49, 50, 55, 58, 67,
                              69, 72, 74, 75, 77, 78, 79, 93, 94, 95, 96, 98, 107, 108, 109, 110]
         self.tier3_radars = [9, 10, 25, 26, 27, 30, 33, 36, 37, 39, 41, 44, 48, 53, 54, 56, 62, 97]
-        self.censor_radars = [30, 100, 101, 102, 103, 104]
+        self.censor_radars = [9, 30]
         self.nosun_radars = [6, 31, 32, 48, 95]
 
         self.read_local_config(etc_dir)
