@@ -27,13 +27,16 @@ class S3car():
             # env override of root directory
             s3car_root = os.environ["S3CAR_ROOT_DIR"]
             # prefix all directories
-            root_dir = s3car_root + root_dir
-            etc_dir = s3car_root + etc_dir
-            html_dir = s3car_root + html_dir
+            root_dir = os.path.join(s3car_root, root_dir)
+            etc_dir = os.path.join(s3car_root, etc_dir)
+            html_dir = os.path.join(s3car_root, html_dir)
         except KeyError:
             pass
 
         self.root_path = root_dir
+        self.etc_path = etc_dir
+        self.html_path = html_dir
+
         self.cluttercal_path = os.path.join(root_dir, "cluttercal")
         self.config_path = os.path.join(root_dir, "config")
         self.clean_ts_path = os.path.join(root_dir, "s3car_diagnostics", "clean")
@@ -41,7 +44,6 @@ class S3car():
         self.raw_ts_path = os.path.join(root_dir, "s3car_diagnostics", "raw")
         self.dualpolqc_path = os.path.join(root_dir, "dualpol_qc")
         self.gpmmatch_path = os.path.join(root_dir, "gpmmatch")
-        self.html_path = html_dir
         self.log_path = os.path.join(root_dir, "log")
         self.solar_path = os.path.join(root_dir, "solar", "data")
         self.sst_path = os.path.join(root_dir, "sensitivity")
