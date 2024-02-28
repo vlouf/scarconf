@@ -314,7 +314,7 @@ def config_list(cfg, ty, group, item):
     """Return cfg[group][item] as list of type `ty`."""
     if not cfg[group][item]:
         return []
-    return [ty(r) for r in cfg[group][item].split(' ')]
+    return [ty(r) for r in cfg[group][item].split()]
 
 class Chronos:
     """
