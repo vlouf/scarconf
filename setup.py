@@ -1,9 +1,3 @@
-"""A setuptools based setup module.
-See:
-https://packaging.python.org/en/latest/distributing.html
-https://github.com/pypa/sampleproject
-"""
-
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 from os import path
@@ -17,7 +11,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="scarconf",
-    version="0.0.1",
+    version="1.0.0",
     description="S3car global parameters.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -32,9 +26,12 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     keywords="radar weather meteorology correction",
     packages=find_packages(exclude=["notebook"]),
     install_requires=["pandas"],
-    project_urls={"Source": "https://github.com/vlouf/scarconf/",},
+    project_urls={"Source": "https://gitlab.bom.gov.au/radarcal/scarconf/",},
 )

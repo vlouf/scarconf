@@ -3,8 +3,8 @@ S3CAR Global configuration class.
 """
 __authors__ = "Valentin Louf"
 __contact__ = "valentin.louf@bom.gov.au"
-__version__ = "0.5.0"
-__date__ = "2021/06"
+__version__ = "1.0.0"
+__date__ = "2024/04/03"
 
 import configparser
 import logging
