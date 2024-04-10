@@ -74,7 +74,7 @@ class S3car:
                 if not os.path.exists(v):
                     raise FileNotFoundError(f"Directory {v} not found.")
 
-    def get_amber_alert(kpi: int) -> str:
+    def get_amber_alert(self, kpi: int) -> str:
         """
         Get the Green, Amber, or red alert
 
@@ -101,7 +101,7 @@ class S3car:
         elif kpi == 3:
             return red
 
-    def get_kpi_pointing(elev: float, azimuth: float = None) -> int:
+    def get_kpi_pointing(self, elev: float, azimuth: float = None) -> int:
         """
         Get the KPI index for the pointing accuracy.
 
@@ -136,7 +136,7 @@ class S3car:
         else:
             return 3
 
-    def get_kpi_reflectivity(tier: int, offset: float) -> int:
+    def get_kpi_reflectivity(self, tier: int, offset: float) -> int:
         """
         Get the KPI index for the given radar.
 
