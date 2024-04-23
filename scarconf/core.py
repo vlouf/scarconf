@@ -4,7 +4,7 @@ S3CAR Global configuration class.
 
 __authors__ = "Valentin Louf"
 __contact__ = "valentin.louf@bom.gov.au"
-__version__ = "1.1.0"
+__version__ = "1.1.5"
 __date__ = "2024/04/03"
 
 import configparser
