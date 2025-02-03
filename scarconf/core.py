@@ -395,6 +395,7 @@ class S3car:
             55: "Wagga Wagga",
             56: "Longreach",
             58: "South Doodlakine",
+            59: "Mobile X-band 1",
             62: "Norfolk Island",
             63: "Darwin (Berrimah)",
             64: "Adelaide (Buckland Park)",
@@ -419,12 +420,14 @@ class S3car:
             97: "Mildura",
             98: "Taroom",
             105: "Brisbane Airport",
+            106: "Townsville",
             107: "Richmond",
-            108: "Darling Downs",
+            108: "Toowoomba (Darling Downs)",
             109: "Goondiwindi",
             110: "Tennant Creek",
+            111: "Karratha",
             112: "Gove",
-            114: "Carnarvon",
+            114: "Carnarvon (Gascoyne)",
         }
 
 
